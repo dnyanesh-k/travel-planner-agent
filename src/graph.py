@@ -23,7 +23,7 @@ def create_graph():
 
     # create a graph image
     image = app.get_graph().draw_mermaid_png()
-    with open('graphs/image.png', 'wb') as file:
+    with open('src/graphs/image.png', 'wb') as file:
         file.write(image)
 
     return app
