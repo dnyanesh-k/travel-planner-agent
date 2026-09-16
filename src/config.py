@@ -1,12 +1,22 @@
 from dotenv import load_dotenv
-import os
+import logging
 
-from langchain.chat_models import init_chat_model
-
+# load env variabless immediately
 load_dotenv()
 
-model = os.environ['MODEL'] 
-model_provider = os.environ['MODEL_PROVIDER']
+def setup_logging():
+    """Sets up the global logging configuration once"""
 
+    log_format = "%(asctime)s %(levelname)s - %(message)s"
 
-llm = init_chat_model(model=model, model_provider=model_provider)
+    console_handler = logging.StreamHandler()
+
+    file_handler = logging.FileHandler(
+        "travel-planner.log", encoding='utf-8'
+    )
+    # create a logger
+    logging.basicConfig(
+        level=logging.INFO,
+        format=log_format,
+        handlers=[console_handler, file_handler]
+    )
