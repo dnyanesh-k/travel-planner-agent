@@ -1,27 +1,12 @@
-import os
-import logging
-
-from config import setup_logging
 from langgraph.graph import StateGraph, START, END
 from state import State
 from nodes import planner, executor, final_result, route
-
-# Run the logging configuration first thing
-setup_logging()
-
-# create a logger
-logger = logging.getLogger(__name__)
-
-model = os.environ['MODEL']
-model_provider = os.environ['MODEL_PROVIDER']
-
-logger.info(f"LangChain model {model} successfully initialized!")
 
 def create_graph():
     # create a graph
     graph = StateGraph(State)
 
-
+    # add nodes
     graph.add_node("planner", planner)
     graph.add_node("executor", executor)
     graph.add_node("final", final_result)

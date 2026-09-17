@@ -20,3 +20,5 @@ def setup_logging():
         format=log_format,
         handlers=[console_handler, file_handler]
     )
+
+logger = logging.getLogger(__name__)
