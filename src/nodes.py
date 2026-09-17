@@ -1,5 +1,5 @@
 from langchain.messages import SystemMessage, HumanMessage
-from prompts import planner_system_prompt, planner_user_prompt, executor_system_message, executor_user_prompt
+from prompts import planner_system_prompt, planner_user_prompt, executor_system_message, executor_user_prompt, final_system_prommp, final_user_prompt
 from state import State
 from config import logger
 from llm import llm, search_tool
@@ -100,9 +100,27 @@ def executor(state: State):
 
 def final_result(state: State):
     """Synthesize final itinerary."""
-    pass
+    # logger.info("Generating the final result")
+    # # generate the final result using llm
+
+    result = llm.invoke([
+      SystemMessage(content=final_system_prommp),
+      HumanMessage(content=final_user_prompt.format(
+          user_request = state['user_request'], 
+          plan = "\n".join(state['plan']), 
+          results = state['execution_result']))
+    ])
+    logger.info("")
+
+    return {
+        "final_result": result.content.strip() 
+    }
 
 
 def route(state: State):
     """Decide: aggregate or refine."""
-    pass
+    # decide wether to generate final result or
+    # continue calling executor to execute next steps
+    if state['current_step'] < len(state['plan']):
+      return "executor"
+    return "final"

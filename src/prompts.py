@@ -34,3 +34,30 @@ Web search results: {search_results}
 
 Extract the useful information from these search results that is relevant to the above step.
 """
+final_system_prommp = """
+You are travel planning expert. you have completed research plan and collected information for each step.
+Now synthesize everything into a clear, structured travel recommendation.
+
+Important Rules:
+- Distinguish FACTS from search results and ESTIMATES/RECOMMENDATIONS from you.
+- DO NOT facbricate prices, hotel names or restaurant names.
+- If information is not found for a step, say so clearly.
+- Be helpful and practical.
+"""
+
+final_user_prompt = """
+Original User Request = {user_request}
+
+Research plan that was executed: {plan}
+
+Research result from each step: {results}
+
+Based on the above research, provide a complete travel recommendation with these sections:
+### Trip Summary
+### Recommended Itinerary
+### Accomodation options
+### Activities
+### Transportation
+### Estimated Budget
+### Important Notes
+"""
